@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	"github.com/Befalen/funtemps/conv"
 )
 
 // Definerer flag-variablene i hoved-"scope"
