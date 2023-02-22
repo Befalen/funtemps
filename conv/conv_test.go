@@ -14,18 +14,18 @@ kan du bruke malen som den er (du må selvsagt endre
 funksjonsnavn og testverdier
 */
 
-func TestFarhenheitToCelsius(t *testing.T) {
+func TestFahrenheitToCelsius(t *testing.T) {
 	type test struct {
 		input float64
 		want  float64
 	}
 
-	test := []test{
+	tests := []test{
 		{input: 134, want: 56.67},
 	}
 
 	for _, tc := range tests {
-		got := FarhenheitToCelsius(tc.input)
+		got := FahrenheitToCelsius(tc.input)
 		if !reflect.DeepEqual(tc.want, got) {
 			t.Errorf("expected: %v, got: %v", tc.want, got)
 		}
@@ -35,8 +35,8 @@ func TestFarhenheitToCelsius(t *testing.T) {
 // De andre testfunksjonene implementeres her
 // ...
 
-// Konverterer fra Farhenhet til Celsius
-func FarhenheitToCelsius(value float64) float64 {
+// Konverterer fra Fahrenheit til Celsius
+func FahrenheitToCelsius(value float64) float64 {
 	// Formellen
-	return (value - 32) * (5 / 9)
+	return (value - 32) * (5.0 / 9.0)
 }
