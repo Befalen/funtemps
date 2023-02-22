@@ -3,9 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-
-	"github.com/Befalen/funtemps/conv"
-	"github.com/Befalen/funtemps/funfacts"
 )
 
 // Definerer flag-variablene i hoved-"scope"
@@ -32,31 +29,29 @@ func main() {
 	flag.Parse()
 
 	// Check for conflicting flags
-	if isFlagPassed("v") && isFlagPassed("funfacts") || isFlagPassed("t") {
+	if isFlagPassed("v") && (isFlagPassed("funfacts") || isFlagPassed("t")) {
 		fmt.Println("Error: -v kan ikke bli brukt med -funfacts eller -t flags")
 		return
 	}
 
 	if isFlagPassed("out") {
+		var result float64
 		switch out {
 		case "C":
-			result := conv.Convert(value, unit, "C")
-			fmt.Printf("%0.2f%s is %0.2f\n", value, unit, result)
+			result = convert(value, unit, "C")
 		case "F":
-
-			result := conv.Convert(value, unit, "F")
-			fmt.Printf("%0.2f%s is %0.2f\n", value, unit, result)
+			result = convert(value, unit, "F")
 		case "K":
-
-			result := conv.Convert(value, unit, "K")
-			fmt.Printf("%0.2f%s is %0.2f\n", value, unit, result)
+			result = convert(value, unit, "K")
 		default:
 			fmt.Println("Ugyldig utdataflagg. Mulige verdier er C, F, K")
+			return
 		}
+		fmt.Printf("%0.2f%s is %0.2f%s\n", value, unit, result, out)
 	}
 
 	if isFlagPassed("funfacts") {
-		funFacts := funfacts.GetFunFacts(funfactsFlag)
+		funFacts := getFunFacts(funfactsFlag)
 		for _, fact := range funFacts {
 			fmt.Println(fact)
 		}
@@ -71,4 +66,25 @@ func isFlagPassed(name string) bool {
 		}
 	})
 	return found
+}
+
+func getFunFacts(subject string) []string {
+	var facts []string
+	switch subject {
+	case "sun":
+		facts = []string{
+			"The sun is the closest star to Earth.",
+		}
+	case "moon":
+		facts = []string{
+			"The moon is about 4.5 billion years old.",
+		}
+	case "earth":
+		facts = []string{
+			"Earth is the third planet from the sun.",
+		}
+	default:
+		facts = []string{"Sorry, I don't have any fun facts for you."}
+	}
+	return facts
 }

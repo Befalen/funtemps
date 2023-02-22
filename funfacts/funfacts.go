@@ -1,17 +1,24 @@
 package funfacts
 
+type FunFacts struct {
+	Sun   []string
+	Moon  []string
+	Earth []string
+}
+
 func GetFunFacts(about string) []string {
-	funFacts := new(FunFacts)
+	funFacts := &FunFacts{
+		Sun:   []string{"The sun is the closest star to Earth."},
+		Moon:  []string{"The moon is about 4.5 billion years old."},
+		Earth: []string{"Earth is the third planet from the sun."},
+	}
 
-	funFacts.Sun = []string{"Temperatur i Solens kjerne 15000000 C", "Temperatur på ytre lag av Solen 5778 K"}
-	funFacts.Luna = []string{"Temperatur på Månens overflate om natten -183 C", "Temperatur på Månens overflate om dagen 106 C"}
-	funFacts.Terra = []string{"Høyeste temperatur målt på Jordens overflate er 56.7 C", "Laveste temperatur målt på Jordens overflate -89.4 C", "Temperatur i Jordens indre kjerne 9392 K"}
-
-	if about == "sun" {
+	switch about {
+	case "sun":
 		return funFacts.Sun
-	} else if about == "luna" {
-		return funFacts.Luna
-	} else {
-		return funFacts.Terra
+	case "moon":
+		return funFacts.Moon
+	default:
+		return funFacts.Earth
 	}
 }
