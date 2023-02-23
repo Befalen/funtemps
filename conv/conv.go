@@ -2,22 +2,22 @@ package conv
 
 // fahr til cel
 func FahrenheitToCelsius(fahrenheit float64) float64 {
-	return (fahrenheit - 32) * 5 / 9
+	return (value - 32) * 5 / 9
 }
 
 // cel til fahr
 func CelsiusToFahrenheit(celsius float64) float64 {
-	return celsius*9/5 + 32
+	return value*9/5 + 32
 }
 
 // kel til cel
 func KelvinToCelsius(kelvin float64) float64 {
-	return kelvin - 273.15
+	return value - 273.15
 }
 
 // cel til kel
 func CelsiusToKelvin(value float64) float64 {
-	return (value - 273.15)
+	return value + 273.15
 }
 
 // farh til kel
