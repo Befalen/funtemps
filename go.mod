@@ -1,5 +1,3 @@
-module github.com/Befalen/funtemps
+module github.com/m/v2
 
-go 1.19
-
-require golang.org/x/text v0.3.5 // indirect
+go 1.20
