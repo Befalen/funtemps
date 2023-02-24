@@ -1,31 +1,25 @@
 package conv
 
-// fahr til cel
-func FahrenheitToCelsius(fahrenheit float64) float64 {
-	return (value - 32) * 5 / 9
-}
-
-// cel til fahr
 func CelsiusToFahrenheit(celsius float64) float64 {
-	return value*9/5 + 32
+	return (celsius * 9.0 / 5.0) + 32.0
 }
 
-// kel til cel
+func CelsiusToKelvin(celsius float64) float64 {
+	return celsius + 273.15
+}
+
+func FahrenheitToCelsius(fahrenheit float64) float64 {
+	return (fahrenheit - 32.0) * 5.0 / 9.0
+}
+
+func FahrenheitToKelvin(fahrenheit float64) float64 {
+	return (fahrenheit-32.0)*5.0/9.0 + 273.15
+}
+
 func KelvinToCelsius(kelvin float64) float64 {
-	return value - 273.15
+	return kelvin - 273.15
 }
 
-// cel til kel
-func CelsiusToKelvin(value float64) float64 {
-	return value + 273.15
-}
-
-// farh til kel
-func FahrenheitToKelvin(value float64) float64 {
-	return (value - 32*(5/9) + 273.15)
-}
-
-// kel til fahr
-func KelvinToFahrenheit(value float64) float64 {
-	return (value - 273.15*(9/5) + 32)
+func KelvinToFahrenheit(kelvin float64) float64 {
+	return (kelvin-273.15)*9.0/5.0 + 32.0
 }

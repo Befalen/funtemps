@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	"github.com/Befalen/funtemps/conv"
 )
 
 // Definerer flag-variablene i hoved-"scope"
@@ -24,25 +26,49 @@ func init() {
 
 }
 
-func main() {
-
-	flag.Parse()
-
-	// Check for conflicting flags
-	if isFlagPassed("v") && (isFlagPassed("funfacts") || isFlagPassed("t")) {
-		fmt.Println("Error: -v kan ikke bli brukt med -funfacts eller -t flags")
-		return
+func temperatureConv(input float64, inputUnit string, outputUnit string) float64 {
+	switch inputUnit {
+	case "C":
+		switch outputUnit {
+		case "C":
+			return input
+		case "F":
+			return conv.CelsiusToFahrenheit(input)
+		case "K":
+			return conv.CelsiusToKelvin(input)
+		}
+	case "F":
+		switch outputUnit {
+		case "C":
+			return conv.FahrenheitToCelsius(input)
+		case "F":
+			return input
+		case "K":
+			return conv.FahrenheitToKelvin(input)
+		}
+	case "K":
+		switch outputUnit {
+		case "C":
+			return conv.KelvinToCelsius(input)
+		case "F":
+			return conv.KelvinToFahrenheit(input)
+		case "K":
+			return input
+		}
 	}
+	return input
+}
 
+func main() {
 	if isFlagPassed("out") {
 		var result float64
 		switch out {
 		case "C":
-			result = convert(value, unit, "C")
+			result = temperatureConv(value, unit, "C")
 		case "F":
-			result = convert(value, unit, "F")
+			result = temperatureConv(value, unit, "F")
 		case "K":
-			result = convert(value, unit, "K")
+			result = temperatureConv(value, unit, "K")
 		default:
 			fmt.Println("Ugyldig utdataflagg. Mulige verdier er C, F, K")
 			return
