@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Befalen/funtemps/conv"
+	"github.com/befalen/funtemps/conv"
 )
 
 func temperatureConv(input float64, inputUnit string, outputUnit string) float64 {
