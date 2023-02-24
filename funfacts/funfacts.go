@@ -1,4 +1,4 @@
-package funfacts
+package conv
 
 type FunFacts struct {
 	Sun   []string
