@@ -1,3 +1,3 @@
-module github.com/m/v2
+module funtemps
 
 go 1.20
