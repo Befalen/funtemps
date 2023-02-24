@@ -23,7 +23,6 @@ func init() {
 
 	flag.StringVar(&out, "C", "beregne temperatur i C - celcius, F - fahrenheit, K - Kelvin")
 	flag.StringVar(&funfacts, "funfacts", "sun", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
-
 }
 
 func main() {
