@@ -8,79 +8,58 @@ import (
 )
 
 // Definerer flag-variablene i hoved-"scope"
-var value float64
-var unit string
+var fahr float64
+var kel float64
+var cel float64
 var out string
-var funfactsFlag string
-var temperatureScale string
+var funfacts string
 
 func init() {
 
 	// Definerer og initialiserer flagg-variablene
-	flag.Float64Var(&value, "v", 0.0, "temperature value")
-	flag.StringVar(&unit, "u", "C", "temperature unit, e.g. C, F, K")
+	flag.Float64Var(&fahr, "F", 0.0, "temperatur i fahrenheit")
+	flag.Float64Var(&kel, "K", 0.0, "temperatur i kelvin")
+	flag.Float64Var(&cel, "C", 0.0, "temperatur i celsius")
 
-	flag.StringVar(&out, "out", "C", "beregne temperatur i C - celsius, F - farhenheit, K- Kelvin")
-	flag.StringVar(&funfactsFlag, "funfacts", "sun", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
-	flag.StringVar(&temperatureScale, "t", "C", "temperaturskala som skal brukes når fun-facts vises")
+	flag.StringVar(&out, "C", "beregne temperatur i C - celcius, F - fahrenheit, K - Kelvin")
+	flag.StringVar(&funfacts, "funfacts", "sun", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
 
-}
-
-func temperatureConv(input float64, inputUnit string, outputUnit string) float64 {
-	switch inputUnit {
-	case "C":
-		switch outputUnit {
-		case "C":
-			return input
-		case "F":
-			return conv.CelsiusToFahrenheit(input)
-		case "K":
-			return conv.CelsiusToKelvin(input)
-		}
-	case "F":
-		switch outputUnit {
-		case "C":
-			return conv.FahrenheitToCelsius(input)
-		case "F":
-			return input
-		case "K":
-			return conv.FahrenheitToKelvin(input)
-		}
-	case "K":
-		switch outputUnit {
-		case "C":
-			return conv.KelvinToCelsius(input)
-		case "F":
-			return conv.KelvinToFahrenheit(input)
-		case "K":
-			return input
-		}
-	}
-	return input
 }
 
 func main() {
-	if isFlagPassed("out") {
-		var result float64
-		switch out {
-		case "C":
-			result = temperatureConv(value, unit, "C")
-		case "F":
-			result = temperatureConv(value, unit, "F")
-		case "K":
-			result = temperatureConv(value, unit, "K")
-		default:
-			fmt.Println("Ugyldig utdataflagg. Mulige verdier er C, F, K")
-			return
-		}
-		fmt.Printf("%0.2f%s is %0.2f%s\n", value, unit, result, out)
+	flag.Parse()
+
+	// kel til cel
+	if isFlagPassed("K") && out == "C" {
+		output := conv.KelvinToCelsius(kel)
+		fmt.Printf("%v K er %v C", kel, output)
+	}
+	// cel til kel
+	if isFlagPassed("C") && out == "K" {
+		output := conv.CelsiusToKelvin(cel)
+		fmt.Printf("%v C er %v K", kel, output)
 	}
 
-	if isFlagPassed("funfacts") {
-		funFacts := getFunFacts(funfactsFlag)
-		for _, fact := range funFacts {
-			fmt.Println(fact)
-		}
+	// fahr til cel
+	if isFlagPassed("F") && out == "C" {
+		output := conv.FahrenheitToCelsius(fahr)
+		fmt.Printf("%v F er %v C", kel, output)
+	}
+	// cel til fahr
+	if isFlagPassed("C") && out == "F" {
+		output := conv.CelsiusToFahrenheit(cel)
+		fmt.Printf("%v C er %v F", kel, output)
+	}
+
+	// fahr til kel
+	if isFlagPassed("F") && out == "K" {
+		output := conv.FahrenheitToKelvin(fahr)
+		fmt.Printf("%v F er %v K", kel, output)
+	}
+	// kel til fahr
+	if isFlagPassed("K") && out == "F" {
+		output := conv.KelvinToFahrenheit(kel)
+		fmt.Printf("%v K er %v F", kel, output)
 	}
 }
 
@@ -92,25 +71,4 @@ func isFlagPassed(name string) bool {
 		}
 	})
 	return found
-}
-
-func getFunFacts(subject string) []string {
-	var facts []string
-	switch subject {
-	case "sun":
-		facts = []string{
-			"The sun is the closest star to Earth.",
-		}
-	case "moon":
-		facts = []string{
-			"The moon is about 4.5 billion years old.",
-		}
-	case "earth":
-		facts = []string{
-			"Earth is the third planet from the sun.",
-		}
-	default:
-		facts = []string{"Sorry, I don't have any fun facts for you."}
-	}
-	return facts
 }
