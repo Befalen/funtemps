@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/befalen/funtemps/conv"
+	"github.com/Befalen/funtemps/conv"
 )
 
 // Definerer flag-variablene i hoved-"scope"
